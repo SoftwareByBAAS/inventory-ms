@@ -1,0 +1,386 @@
+{
+	"products": {
+		"GET /products": {
+			"description": "Get a list of all products",
+			"query": [
+				{
+					"name": "limit",
+					"type": "number",
+					"required": false
+				},
+				{
+					"name": "page",
+					"type": "number",
+					"required": false
+				}
+			],
+			"access": "Public | Auth"
+		},
+		"GET /products/:productId": {
+			"description": "Get a single product by id",
+			"params": {
+				"productId": {
+					"type": "string",
+					"required": true
+				}
+			},
+			"access": "Public | Auth"
+		},
+		"POST /products": {
+			"description": "Create a new product",
+			"body": {
+				"categoryId": {
+					"type": "string",
+					"required": true
+				},
+				"name": {
+					"type": "string",
+					"required": true
+				},
+				"description": {
+					"type": "string",
+					"required": true
+				},
+				"unitType": {
+					"type": "string",
+					"required": true
+				},
+				"price": {
+					"type": "number",
+					"required": true
+				},
+				"supplierId": {
+					"type": "string",
+					"required": true
+				},
+				"image": {
+					"type": "string",
+					"required": false
+				},
+				"meta": {
+					"type": "object",
+					"required": false
+				}
+			},
+			"access": "Public | Auth | Admin"
+		},
+		"PATCH /products/:productId": {
+			"description": "Update a single product",
+			"body": {
+				"categoryId": {
+					"type": "string",
+					"required": true
+				},
+				"name": {
+					"type": "string",
+					"required": true
+				},
+				"description": {
+					"type": "string",
+					"required": true
+				},
+				"unitType": {
+					"type": "string",
+					"required": true
+				},
+				"price": {
+					"type": "number",
+					"required": true
+				},
+				"supplierId": {
+					"type": "string",
+					"required": true
+				},
+				"image": {
+					"type": "string",
+					"required": false
+				},
+				"meta": {
+					"type": "object",
+					"required": false
+				}
+			},
+			"params": {
+				"productId": {
+					"type": "string",
+					"required": true
+				}
+			},
+			"access": "Public | Auth | Admin"
+		},
+		"DELETE /products/:productId": {
+			"description": "Delete a single product",
+			"params": {
+				"productId": {
+					"type": "string",
+					"required": true
+				}
+			},
+			"access": "Public | Auth | Admin"
+		}
+	},
+	"categories": {
+		"GET /categories": {
+			"description": "Get a list of all categories",
+			"query": [
+				{
+					"name": "limit",
+					"type": "number",
+					"required": false
+				},
+				{
+					"name": "page",
+					"type": "number",
+					"required": false
+				}
+			],
+			"access": "Public | Auth"
+		},
+		"GET /categories/:categoryId": {
+			"description": "Get a single category by id",
+			"params": {
+				"categoryId": {
+					"type": "string",
+					"required": true
+				}
+			},
+			"access": "Public | Auth"
+		},
+		"GET /categories/products/:categoryId": {
+			"description": "Get a list of products within a category",
+			"params": {
+				"categoryId": {
+					"type": "string",
+					"required": true
+				}
+			},
+			"query": [
+				{
+					"name": "limit",
+					"type": "number",
+					"required": false
+				},
+				{
+					"name": "page",
+					"type": "number",
+					"required": false
+				}
+			],
+			"access": "Public | Auth"
+		},
+		"POST /categories": {
+			"description": "Create a new category",
+			"body": {
+				"name": {
+					"type": "string",
+					"required": true
+				},
+				"description": {
+					"type": "string",
+					"required": true
+				}
+			},
+			"access": "Public | Auth | Admin"
+		},
+		"PATCH /categories/:categoryId": {
+			"description": "Update a single category",
+			"params": {
+				"categoryId": {
+					"type": "string",
+					"required": true
+				}
+			},
+			"body": {
+				"name": {
+					"type": "string",
+					"required": true
+				},
+				"description": {
+					"type": "string",
+					"required": true
+				}
+			},
+			"access": "Public | Auth | Admin"
+		},
+		"DELETE /categories/:categoryId": {
+			"description": "Delete a single category",
+			"params": {
+				"categoryId": {
+					"type": "string",
+					"required": true
+				}
+			},
+			"constraints": ["Category can not be deleted if there is a product connected to it"],
+			"access": "Public | Auth | Admin"
+		}
+	},
+	"suppliers": {
+		"GET /suppliers": {
+			"description": "Get a list of all suppliers",
+			"query": [
+				{
+					"name": "limit",
+					"type": "number",
+					"required": false
+				},
+				{
+					"name": "page",
+					"type": "number",
+					"required": false
+				}
+			],
+			"access": "Public | Auth | Admin"
+		},
+		"GET /suppliers/:supplierId": {
+			"description": "Get a single supplier",
+			"params": {
+				"supplierId": {
+					"type": "string",
+					"required": true
+				}
+			},
+			"access": "Public | Auth | Admin"
+		},
+		"POST /suppliers": {
+			"description": "Create a new supplier",
+			"body": {
+				"name": {
+					"type": "string",
+					"required": true
+				},
+				"email": {
+					"type": "string",
+					"required": true
+				},
+				"phone": {
+					"type": "string",
+					"required": false
+				},
+				"address": {
+					"type": "object",
+					"required": false,
+					"properties": {
+						"lineOne": {
+							"type": "string",
+							"required": true
+						},
+						"lineTwo": {
+							"type": "string",
+							"required": false
+						},
+						"city": {
+							"type": "string",
+							"required": true
+						},
+						"state": {
+							"type": "string",
+							"required": true
+						},
+						"country": {
+							"type": "string",
+							"required": true
+						},
+						"postalCode": {
+							"type": "string",
+							"required": true
+						}
+					}
+				}
+			},
+			"access": "Public | Auth | Admin"
+		},
+		"PATCH /suppliers/:supplierId": {
+			"description": "Update a single supplier",
+			"params": {
+				"supplierId": {
+					"type": "string",
+					"required": true
+				}
+			},
+			"body": {
+				"name": {
+					"type": "string",
+					"required": true
+				},
+				"email": {
+					"type": "string",
+					"required": true
+				},
+				"phone": {
+					"type": "string",
+					"required": false
+				},
+				"address": {
+					"type": "object",
+					"required": false,
+					"properties": {
+						"lineOne": {
+							"type": "string",
+							"required": true
+						},
+						"lineTwo": {
+							"type": "string",
+							"required": false
+						},
+						"city": {
+							"type": "string",
+							"required": true
+						},
+						"state": {
+							"type": "string",
+							"required": true
+						},
+						"country": {
+							"type": "string",
+							"required": true
+						},
+						"postalCode": {
+							"type": "string",
+							"required": true
+						}
+					}
+				}
+			},
+			"access": "Public | Auth | Admin"
+		},
+		"DELETE /suppliers/:supplierId": {
+			"description": "Delete a single supplier",
+			"params": {
+				"supplierId": {
+					"type": "string",
+					"required": true
+				}
+			},
+			"access": "Public | Auth | Admin"
+		}
+	},
+	"inventory": {
+		"GET /inventory/report": {
+			"description": "Get a current snapshot of product inventory",
+			"access": "Public | Auth | Admin"
+		},
+		"POST /inventory/in": {
+			"description": "Record an inflow of products",
+			"body": {
+				"products": [
+					{
+						"productId": "string",
+						"quantity": "number"
+					}
+				]
+			},
+			"access": "Public | Auth | Admin"
+		},
+		"POST /inventory/out": {
+			"description": "Record an outflow of products",
+			"body": {
+				"products": [
+					{
+						"productId": "string",
+						"quantity": "number"
+					}
+				]
+			}
+		}
+	}
+}
